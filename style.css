@@ -1,1 +1,16 @@
-#map { height: 180px; }
+#container{
+    width: 100%;
+    margin: 0 auto;
+}
+#map {
+    height: 480px;
+    width: 480px;
+    margin-top: 2rem;
+    margin: 0 auto;
+}
+
+#resultat{
+    width: 36%;
+    margin: 0 auto;
+    font-size: 11pt;
+}
