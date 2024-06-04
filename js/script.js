@@ -37,7 +37,9 @@ function printMeteors(meteor) {
   resultat.innerHTML = "";
   resultat.appendChild(taula);
 
+  //AQUI ENTRA????????
   meteor.forEach((meteora) => {
+    console.log("entro a fer el taulainsertrow");
     const row = taula.insertRow();
     const celaNom = row.insertCell(0);
     const celaLat = row.insertCell(1);
@@ -65,7 +67,7 @@ function printMeteors(meteor) {
 
         window.map.setView([lat, long], 15);
 
-        const popupContent = `<div style="font-size: 16px;"><b>Nombre:</b> ${meteora.name}<br><b>Latitud:</b> ${meteora.reclat}<br><b>Longitud:</b> ${meteora.reclong}</div>`;
+        const popupContent = `<div style="font-size: 16px;"><b>Nom:</b> ${meteora.name}<br><b>Latitud:</b> ${meteora.reclat}<br><b>Longitud:</b> ${meteora.reclong}</div>`;
 
         window.marker.bindPopup(popupContent).openPopup();
 
