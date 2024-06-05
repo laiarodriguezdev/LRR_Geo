@@ -11,6 +11,7 @@ fetch("js/json/earthMeteorites.json")
       };
     });
     console.log(meteorites);
+    printMeteors(meteorites);
   });
 
 const map = L.map("map").setView([41.9, 3.17], 11); //PALAMÓS PALAAAAMÓS
@@ -37,9 +38,8 @@ function printMeteors(meteor) {
   resultat.innerHTML = "";
   resultat.appendChild(taula);
 
-  //AQUI ENTRA????????
   meteor.forEach((meteora) => {
-    console.log("entro a fer el taulainsertrow");
+    // console.log("entro a fer el taulainsertrow");
     const row = taula.insertRow();
     const celaNom = row.insertCell(0);
     const celaLat = row.insertCell(1);
@@ -50,24 +50,33 @@ function printMeteors(meteor) {
     celaLong.textContent = meteora.reclong;
 
     [celaNom, celaLat, celaLong].forEach((cela) => {
+      // console.log("Soc a cela afegint border");
       cela.style.border = "1px solid black";
       cela.style.padding = "2.5px";
     });
 
     [celaNom, celaLat, celaLong].forEach((cela) => {
       cela.addEventListener("click", () => {
+        // console.log("Soc a cela afegint les dades");
         const lat = parseFloat(meteora.reclat);
         const long = parseFloat(meteora.reclong);
-
+        
         if (window.marker) {
           window.map.removeLayer(window.marker);
         }
-
+        
         window.marker = L.marker([lat, long]).addTo(window.map);
+
+        console.log("Latitud:", lat);
+        console.log("Longitud:", long);
 
         window.map.setView([lat, long], 15);
 
-        const popupContent = `<div style="font-size: 16px;"><b>Nom:</b> ${meteora.name}<br><b>Latitud:</b> ${meteora.reclat}<br><b>Longitud:</b> ${meteora.reclong}</div>`;
+        console.log("Latitud:", lat);
+        console.log("Longitud:", long);
+
+
+        const popupContent = `<div style="font-size: 16px;"><b>Nom:</b> ${meteora.nom}<br><b>Latitud:</b> ${meteora.reclat}<br><b>Longitud:</b> ${meteora.reclong}</div>`;
 
         window.marker.bindPopup(popupContent).openPopup();
 
