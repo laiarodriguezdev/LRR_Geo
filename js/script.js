@@ -10,44 +10,43 @@ fetch("js/json/earthMeteorites.json")
         long: meteor.reclong,
       };
     });
-    console.log(meteorites);
     printMeteors(meteorites);
   });
 
-const map = L.map("map").setView([41.9, 3.17], 11); //PALAMÓS PALAAAAMÓS
+var map = L.map("map").setView([41.9, 3.17], 11); //PALAMÓS PALAAAAMÓS
 // console.log(map)
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map); 
 
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
 
 function printMeteors(meteor) {
-  let resultat = document.getElementById("resultat");
-  let taula = document.createElement("table");
+  const resultat = document.getElementById("resultat");
+  const taula = document.createElement("table");
 
-  let rowHeader = taula.insertRow();
-  let titles = ["Nom", "Latitud", "Longitud"];
+  const rowHeader = taula.insertRow();
+  const titles = ["Nom", "Latitud", "Longitud"];
 
-  titles.forEach((txt) => {
+  titles.forEach((title) => {
     const th = document.createElement("th");
-    th.textContent = txt;
+    th.textContent = title;
     rowHeader.appendChild(th);
   });
 
   resultat.innerHTML = "";
   resultat.appendChild(taula);
 
-  meteor.forEach((meteora) => {
+  meteor.forEach((mtr) => {
     // console.log("entro a fer el taulainsertrow");
     const row = taula.insertRow();
     const celaNom = row.insertCell(0);
     const celaLat = row.insertCell(1);
     const celaLong = row.insertCell(2);
 
-    celaNom.textContent = meteora.nom;
-    celaLat.textContent = meteora.reclat;
-    celaLong.textContent = meteora.reclong;
+    celaNom.textContent = mtr.nom;
+    celaLat.textContent = mtr.reclat;
+    celaLong.textContent = mtr.reclong;
 
     [celaNom, celaLat, celaLong].forEach((cela) => {
       // console.log("Soc a cela afegint border");
@@ -55,33 +54,6 @@ function printMeteors(meteor) {
       cela.style.padding = "2.5px";
     });
 
-    [celaNom, celaLat, celaLong].forEach((cela) => {
-      cela.addEventListener("click", () => {
-        // console.log("Soc a cela afegint les dades");
-        const lat = parseFloat(meteora.reclat);
-        const long = parseFloat(meteora.reclong);
-        
-        if (window.marker) {
-          window.map.removeLayer(window.marker);
-        }
-        
-        window.marker = L.marker([lat, long]).addTo(window.map);
-
-        console.log("Latitud:", lat);
-        console.log("Longitud:", long);
-
-        window.map.setView([lat, long], 15);
-
-        console.log("Latitud:", lat);
-        console.log("Longitud:", long);
-
-
-        const popupContent = `<div style="font-size: 16px;"><b>Nom:</b> ${meteora.nom}<br><b>Latitud:</b> ${meteora.reclat}<br><b>Longitud:</b> ${meteora.reclong}</div>`;
-
-        window.marker.bindPopup(popupContent).openPopup();
-
-        window.scrollTo(0, 0);
-      });
-    });
+    
   });
 }
